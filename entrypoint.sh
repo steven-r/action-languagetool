@@ -44,8 +44,7 @@ run_langtool() {
     echo "Checking ${FILE}..." >&2
     curl --silent \
       --request POST \
-      --data "${DATA}" \
-      --data-urlencode "text=@\"${FILE}\"" \
+      --data @"${FILE}" \
       "${API_ENDPOINT}/v2/check" | \
       FILE="${FILE}" tmpl /langtool.tmpl
   done
