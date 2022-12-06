@@ -52,4 +52,4 @@ run_langtool() {
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 run_langtool \
-  | reviewdog -efm="%f:%l:%c:%m"" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}"
+  | reviewdog -efm="%f:%l:%c:%m" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}"
