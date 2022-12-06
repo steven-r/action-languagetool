@@ -34,7 +34,7 @@ if [ -n "${INPUT_DISABLED_CATEGORIES}" ]; then
   DATA="$DATA --disabled-categories ${INPUT_DISABLED_CATEGORIES}"
 fi
 if [ -n "${INPUT_ENABLED_ONLY}" ]; then
-  DATA="$DATA --only-enabled ${INPUT_ENABLED_ONLY}"
+  DATA="$DATA --only-enabled"
 fi
 if [ -n "${INPUT_MOTHER_TONGUE}" ]; then
   DATA="$DATA --mother-tongue ${INPUT_MOTHER_TONGUE}"

@@ -33,7 +33,6 @@ inputs:
     description: 'comma separeted disabledCategories of LanguageTool'
   enabled_only:
     description: 'enabledOnly of LanguageTool'
-    default: 'false'
   rule_files:
     description: 'Additional rules to be used as input for LanguageTool'
 
