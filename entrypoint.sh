@@ -9,6 +9,7 @@ if [ -z "${INPUT_CUSTOM_API_ENDPOINT}" ]; then
 fi
 
 echo "API ENDPOINT: ${API_ENDPOINT}" >&2
+default_api="${API_ENDPOINT}/v2/check"
 
 if [ -n "${GITHUB_WORKSPACE}" ]; then
   cd "${GITHUB_WORKSPACE}" || exit
@@ -48,7 +49,7 @@ FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
 
 run_langtool() {
-  language-tool --output-format reviewdog --url ${API_ENDPOINT}/v2/check $DATA $FILES
+  language-tool --verbose --output-format reviewdog --url ${default_api} $DATA $FILES
 }
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
