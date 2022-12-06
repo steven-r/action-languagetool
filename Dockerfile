@@ -11,7 +11,6 @@ ENV LT_NODE_VERSION=1.0.0-beta.2
 
 USER root
 
-RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
