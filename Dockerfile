@@ -19,6 +19,5 @@ RUN npm install -g languagetool-cli@${LANGTOOL_VERSION}
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 COPY entrypoint.sh /entrypoint.sh
-COPY langtool.tmpl /langtool.tmpl
 
 ENTRYPOINT ["/entrypoint.sh"]

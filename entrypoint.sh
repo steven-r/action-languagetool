@@ -34,10 +34,13 @@ if [ -n "${INPUT_DISABLED_CATEGORIES}" ]; then
   DATA="$DATA --disabled-categories ${INPUT_DISABLED_CATEGORIES}"
 fi
 if [ -n "${INPUT_ENABLED_ONLY}" ]; then
-  DATA="$DATA --enabled-only ${INPUT_ENABLED_ONLY}"
+  DATA="$DATA --only-enabled ${INPUT_ENABLED_ONLY}"
 fi
 if [ -n "${INPUT_MOTHER_TONGUE}" ]; then
   DATA="$DATA --mother-tongue ${INPUT_MOTHER_TONGUE}"
+fi
+if [ -n "${INPUT_RULE_FILES}" ]; then
+  DATA="$DATA --rule-config ${INPUT_RULE_FILES}"
 fi
 
 # Disable glob to handle glob patterns with ghglob command instead of with shell.
@@ -46,7 +49,7 @@ FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
 
 run_langtool() {
-  language-tool --output-format reviewdog $DATA $FILES
+  language-tool --output-format reviewdog --url ${API_ENDPOINT} $DATA $FILES
 }
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
