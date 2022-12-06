@@ -48,7 +48,9 @@ set -o noglob
 FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
 
-output=$(language-tool --verbose --output-format reviewdog --url ${default_api} $DATA $FILES)
+echo "executing language-tool --output-format reviewdog --url ${default_api} $DATA -- $FILES"
+
+output=$(language-tool --output-format reviewdog --url ${default_api} $DATA -- $FILES)
 echo $output
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
