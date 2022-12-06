@@ -16,22 +16,28 @@ fi
 
 git config --global --add safe.directory $GITHUB_WORKSPACE
 
+
 # https://languagetool.org/http-api/swagger-ui/#!/default/post_check
-DATA="language=${INPUT_LANGUAGE}"
+if [ -n "${INPUT_LANGUAGE}" ]; then
+  DATA="--language ${INPUT_LANGUAGE}"
+fi
 if [ -n "${INPUT_ENABLED_RULES}" ]; then
-  DATA="$DATA&enabledRules=${INPUT_ENABLED_RULES}"
+  DATA="$DATA --enabled-rules ${INPUT_ENABLED_RULES}"
 fi
 if [ -n "${INPUT_DISABLED_RULES}" ]; then
-  DATA="$DATA&disabledRules=${INPUT_DISABLED_RULES}"
+  DATA="$DATA --disabled-rules ${INPUT_DISABLED_RULES}"
 fi
 if [ -n "${INPUT_ENABLED_CATEGORIES}" ]; then
-  DATA="$DATA&enabledCategories=${INPUT_ENABLED_CATEGORIES}"
+  DATA="$DATA --enabled-categories ${INPUT_ENABLED_CATEGORIES}"
 fi
 if [ -n "${INPUT_DISABLED_CATEGORIES}" ]; then
-  DATA="$DATA&disabledCategories=${INPUT_DISABLED_CATEGORIES}"
+  DATA="$DATA --disabled-categories ${INPUT_DISABLED_CATEGORIES}"
 fi
 if [ -n "${INPUT_ENABLED_ONLY}" ]; then
-  DATA="$DATA&enabledOnly=${INPUT_ENABLED_ONLY}"
+  DATA="$DATA --enabled-only ${INPUT_ENABLED_ONLY}"
+fi
+if [ -n "${INPUT_MOTHER_TONGUE}" ]; then
+  DATA="$DATA --mother-tongue ${INPUT_MOTHER_TONGUE}"
 fi
 
 # Disable glob to handle glob patterns with ghglob command instead of with shell.
@@ -40,17 +46,10 @@ FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
 
 run_langtool() {
-  for FILE in ${FILES}; do
-    echo "Checking ${FILE}..." >&2
-    curl --silent \
-      --request POST \
-      --data @"${FILE}" \
-      "${API_ENDPOINT}/v2/check" | \
-      FILE="${FILE}" tmpl /langtool.tmpl
-  done
+  language-tool --output-format reviewdog $DATA $FILES
 }
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 run_langtool \
-  | reviewdog -efm="%A%f:%l:%c: %m" -efm="%C %m" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}"
+  | reviewdog -efm="%f:%l:%c:%m"" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}"
