@@ -48,11 +48,9 @@ set -o noglob
 FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
 
-run_langtool() {
-  language-tool --verbose --output-format reviewdog --url ${default_api} $DATA $FILES
-}
+output=$(language-tool --verbose --output-format reviewdog --url ${default_api} $DATA $FILES)
+echo $output
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
-run_langtool \
-  | reviewdog -efm="%f:%l:%c:%m" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}"
+echo $output | reviewdog -efm="%f:%l:%c:%m" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}"
