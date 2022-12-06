@@ -33,8 +33,13 @@ inputs:
     description: 'comma separeted disabledCategories of LanguageTool'
   enabled_only:
     description: 'enabledOnly of LanguageTool'
+  # tool options
   rule_files:
     description: 'Additional rules to be used as input for LanguageTool'
+  concurrent:
+    description: 'Number of concurrent checks to be performed at the server'
+  verbose:
+    description: 'Verbose debug output besides check results'
 
   custom_api_endpoint:
     description: 'Custom API endpoint of LanguageTool server. e.g. https://languagetool.org/api'

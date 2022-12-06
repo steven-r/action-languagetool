@@ -42,13 +42,17 @@ fi
 if [ -n "${INPUT_RULE_FILES}" ]; then
   DATA="$DATA --rule-config ${INPUT_RULE_FILES}"
 fi
+if [ -n "${INPUT_CONCURRENT}" ]; then
+  DATA="$DATA --concurrent ${INPUT_CONCURRENT}"
+fi
+if [ -n "${INPUT_VERBOSE}" ]; then
+  DATA="$DATA --verbose ${INPUT_VERBOSE}"
+fi
 
 # Disable glob to handle glob patterns with ghglob command instead of with shell.
 set -o noglob
 FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
-
-echo "executing language-tool --output-format reviewdog --url ${default_api} $DATA -- $FILES"
 
 output=$(language-tool --output-format reviewdog --url ${default_api} $DATA -- $FILES)
 echo $output
