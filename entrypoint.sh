@@ -49,6 +49,7 @@ FILES="$(git ls-files | ghglob ${INPUT_PATTERNS})"
 set +o noglob
 
 run_langtool() {
+  echo "INFO: running: language-tool --output-format reviewdog --url ${API_ENDPOINT} $DATA $FILES"
   language-tool --output-format reviewdog --url ${API_ENDPOINT} $DATA $FILES
 }
 
