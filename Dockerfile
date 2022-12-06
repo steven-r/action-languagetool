@@ -3,6 +3,7 @@ FROM erikvl87/languagetool:5.9
 
 ENV REVIEWDOG_VERSION=v0.14.1
 ENV GHGLOB_VERSION=v2.0.2
+ENV LANGTOOL_VERSION=latest
 
 USER root
 SHELL [ "/bin/bash", "-c"]
@@ -11,6 +12,8 @@ SHELL [ "/bin/bash", "-c"]
 RUN apk --no-cache add git curl nodejs
 RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /usr/local/bin/ ${REVIEWDOG_VERSION}
 RUN wget -O - -q https://raw.githubusercontent.com/haya14busa/ghglob/master/install.sh| sh -s -- -b /usr/local/bin/ ${GHGLOB_VERSION}
+
+RUN npm install -g languagetool-cli@${LANGTOOL_VERSION}
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
