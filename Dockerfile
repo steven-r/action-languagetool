@@ -13,6 +13,7 @@ RUN apk --no-cache add git curl nodejs npm
 RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /usr/local/bin/ ${REVIEWDOG_VERSION}
 RUN wget -O - -q https://raw.githubusercontent.com/haya14busa/ghglob/master/install.sh| sh -s -- -b /usr/local/bin/ ${GHGLOB_VERSION}
 
+RUN npm install -g ts-node
 RUN npm install -g languagetool-cli@${LANGTOOL_VERSION}
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
