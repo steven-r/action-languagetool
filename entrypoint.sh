@@ -50,7 +50,7 @@ set +o noglob
 
 echo "INFO: running: language-tool --output-format reviewdog --url ${API_ENDPOINT} $DATA $FILES"
 run_langtool() {
-  language-tool --verbose --output-format reviewdog --url ${API_ENDPOINT} $DATA $FILES
+  language-tool --verbose --output-format reviewdog --url ${API_ENDPOINT}/v2/check $DATA $FILES
 }
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
