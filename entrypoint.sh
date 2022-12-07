@@ -58,4 +58,4 @@ output=$(language-tool --output-format reviewdog --url ${default_api} $DATA -- $
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
-echo $output | reviewdog -efm="%f:%l:%c:%m" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}" -filter="${INPUT_FILTER}"
+echo $output | reviewdog -efm="%f:%l:%c:%m" -name="LanguageTool" -reporter="${INPUT_REPORTER:-github-pr-check}" -level="${INPUT_LEVEL}" -filter-mode="${INPUT_FILTER}"
